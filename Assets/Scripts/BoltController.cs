@@ -1,7 +1,5 @@
 #region
 
-using UnityEditor.Build.Content;
-using UnityEditor.UIElements;
 using UnityEngine;
 
 #endregion
@@ -10,26 +8,28 @@ public class BoltController : MonoBehaviour
 {
 	private GameController _gameController;
 
-	public string Source;
+	public bool IsPlayerBolt;
 
 	private void Awake() { this._gameController = FindObjectOfType<GameController>(); }
 
 	private void OnTriggerEnter(Collider other)
 	{
 		if (other.CompareTag("Border")
-			|| other.transform.parent.CompareTag(this.Source)) return;
+			|| other.CompareTag(this.tag)
+			|| other.CompareParentTag("Player") == this.IsPlayerBolt) return;
 
-		GameObject explosion = ExplosionsController.GetExplosion(other.transform.parent.tag);
+		Transform target = other.GetParent();
+		GameObject explosion = ExplosionsController.GetExplosion(target.tag);
 		ExplosionsController.Execute(explosion, this.transform);
 
-		if (this.Source == "Player")
+		if (this.IsPlayerBolt)
 		{
-			int scores = ScoresController.GetPoints(other.transform.parent.gameObject.name);
+			int scores = ScoresController.GetPoints(target.gameObject.name);
 			this._gameController.AddPoints(scores);
 		}
+		else if (target.CompareTag("Player")) this._gameController.GameOver();
 
-		// TODO: Code repetition.
-		Destroy(other.transform.parent.gameObject);
+		Destroy(target.gameObject);
 		Destroy(this.gameObject);
 	}
 }

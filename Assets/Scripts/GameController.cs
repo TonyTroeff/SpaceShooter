@@ -14,6 +14,8 @@ public class GameController : MonoBehaviour
 	public GameObject[] Asteroids;
 	public int AsteroidsCount;
 	public float AsteroidSpawnOffset;
+
+	public Transform Obstacles;
 	public GameObject RestartMenu;
 
 	public Text ScoreBoard;
@@ -48,7 +50,8 @@ public class GameController : MonoBehaviour
 					this.SpawnDimensions.y,
 					this.SpawnDimensions.z);
 
-				Instantiate(this.Asteroids[randomIndex], spawnPosition, Quaternion.identity);
+				GameObject obstacle = Instantiate(this.Asteroids[randomIndex], this.Obstacles);
+				obstacle.transform.position = spawnPosition;
 
 				yield return new WaitForSeconds(this.AsteroidSpawnOffset);
 			}
