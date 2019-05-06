@@ -11,7 +11,7 @@ public class GameController : MonoBehaviour
 	private bool _playerIsAlive = true;
 	private int _score;
 
-	public GameObject Asteroid;
+	public GameObject[] Asteroids;
 	public int AsteroidsCount;
 	public float AsteroidSpawnOffset;
 	public GameObject RestartMenu;
@@ -42,12 +42,13 @@ public class GameController : MonoBehaviour
 		{
 			for (int i = 0; i < this.AsteroidsCount; i++)
 			{
+				int randomIndex = Random.Range(0, this.Asteroids.Length);
 				Vector3 spawnPosition = new Vector3(
 					Random.Range(this.SpawnDimensions.x * -1, this.SpawnDimensions.x),
 					this.SpawnDimensions.y,
 					this.SpawnDimensions.z);
 
-				Instantiate(this.Asteroid, spawnPosition, Quaternion.identity);
+				Instantiate(this.Asteroids[randomIndex], spawnPosition, Quaternion.identity);
 
 				yield return new WaitForSeconds(this.AsteroidSpawnOffset);
 			}
@@ -58,7 +59,7 @@ public class GameController : MonoBehaviour
 
 	private void UpdateScore() => this.ScoreBoard.text = $"Score: {this._score}";
 
-	public void AddScores(int scores)
+	public void AddPoints(int scores)
 	{
 		this._score += scores;
 		this.UpdateScore();

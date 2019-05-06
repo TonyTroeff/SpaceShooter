@@ -6,46 +6,16 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-	private AudioSource _audioSource;
-	private float _nextShot;
-	private Transform _object;
 	private Rigidbody _rigidbody;
-
-	private Transform _shots;
-
-	public GameObject Bolt;
-	public float FireRate;
 
 	public GameField GameField;
 	public float Speed = 1;
 	public float Tilt = 1;
 
-	private void Awake()
-	{
-		this._object = this.transform.Find("Object");
-		this._shots = this.transform.Find("Shots");
-
-		this._rigidbody = this._object.GetComponent<Rigidbody>();
-		this._audioSource = this._shots.GetComponent<AudioSource>();
-	}
-
-	private void Update()
-	{
-		if (Input.GetButton("Fire1") == false
-			|| Time.time < this._nextShot) return;
-
-		this._nextShot = Time.time + this.FireRate;
-
-		GameObject shot = Instantiate(this.Bolt, this._shots);
-		shot.transform.localPosition = this._rigidbody.position;
-		this._audioSource.Play();
-	}
+	private void Awake() { this._rigidbody = this.GetComponent<Rigidbody>(); }
 
 	private void FixedUpdate()
 	{
-		if (this._object.Equals(null)
-			|| this._rigidbody.Equals(null)) return;
-
 		float horizontalMovement = Input.GetAxis("Horizontal");
 		float verticalMovement = Input.GetAxis("Vertical");
 
