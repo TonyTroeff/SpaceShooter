@@ -8,9 +8,10 @@ using UnityEngine;
 public class ExplosionsController : MonoBehaviour
 {
 	private static ExplosionsController _instance;
-	public GameObject[] Explosions;
+	
+	private Transform _explosionsContainer;
 
-	public Transform Parent;
+	public GameObject[] Explosions;
 
 	private void Awake()
 	{
@@ -18,6 +19,8 @@ public class ExplosionsController : MonoBehaviour
 		else if (_instance != this) Destroy(this.gameObject);
 
 		DontDestroyOnLoad(_instance);
+
+		this._explosionsContainer = GameObject.FindWithTag("ExplosionsContainer").transform;
 	}
 
 	public static GameObject GetExplosion(string tagName)
@@ -27,7 +30,7 @@ public class ExplosionsController : MonoBehaviour
 	{
 		if (explosion == null) return;
 
-		GameObject instantiatedExplosion = Instantiate(explosion, _instance.Parent);
+		GameObject instantiatedExplosion = Instantiate(explosion, _instance._explosionsContainer);
 		instantiatedExplosion.transform.position = position.position;
 	}
 }

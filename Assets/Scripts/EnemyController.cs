@@ -24,6 +24,7 @@ public class EnemyController : MonoBehaviour
 
 		this._gameController.GameOver();
 
+		// TODO: Use extension method.
 		Destroy(player.gameObject);
 		Destroy(this.gameObject);
 	}

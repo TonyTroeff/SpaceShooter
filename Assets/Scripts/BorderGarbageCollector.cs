@@ -6,5 +6,5 @@ using UnityEngine;
 
 public class BorderGarbageCollector : MonoBehaviour
 {
-	private void OnTriggerExit(Collider other) { Destroy(other.gameObject); }
+	private void OnTriggerExit(Collider other) { other.DestroyCollider(); }
 }

@@ -29,6 +29,7 @@ public class BoltController : MonoBehaviour
 		}
 		else if (target.CompareTag("Player")) this._gameController.GameOver();
 
+		// TODO: Use extension method.
 		Destroy(target.gameObject);
 		Destroy(this.gameObject);
 	}

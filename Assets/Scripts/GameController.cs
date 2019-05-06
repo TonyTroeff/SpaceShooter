@@ -8,24 +8,25 @@ using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
+	private Transform _enemiesContainer;
+
 	private bool _playerIsAlive = true;
 	private int _score;
 
-	public GameObject[] Asteroids;
-	public int AsteroidsCount;
-	public float AsteroidSpawnOffset;
-
-	public Transform Obstacles;
+	public GameObject[] Enemies;
+	public int EnemiesPerWave;
+	public float EnemiesSpawnOffset;
 	public GameObject RestartMenu;
-
 	public Text ScoreBoard;
 	public Vector3 SpawnDimensions;
-
 	public float StartDelay;
 	public int WavesSpawnOffset;
 
 	private void Awake()
 	{
+		this._enemiesContainer = GameObject.FindWithTag("EnemiesContainer")
+			.transform;
+
 		this.ScoreBoard.gameObject.SetActive(true);
 		this.RestartMenu.SetActive(false);
 	}
@@ -42,18 +43,18 @@ public class GameController : MonoBehaviour
 
 		while (this._playerIsAlive)
 		{
-			for (int i = 0; i < this.AsteroidsCount; i++)
+			for (int i = 0; i < this.EnemiesPerWave; i++)
 			{
-				int randomIndex = Random.Range(0, this.Asteroids.Length);
+				int randomIndex = Random.Range(0, this.Enemies.Length);
 				Vector3 spawnPosition = new Vector3(
 					Random.Range(this.SpawnDimensions.x * -1, this.SpawnDimensions.x),
 					this.SpawnDimensions.y,
 					this.SpawnDimensions.z);
 
-				GameObject obstacle = Instantiate(this.Asteroids[randomIndex], this.Obstacles);
+				GameObject obstacle = Instantiate(this.Enemies[randomIndex], this._enemiesContainer);
 				obstacle.transform.position = spawnPosition;
 
-				yield return new WaitForSeconds(this.AsteroidSpawnOffset);
+				yield return new WaitForSeconds(this.EnemiesSpawnOffset);
 			}
 
 			yield return new WaitForSeconds(this.WavesSpawnOffset);
