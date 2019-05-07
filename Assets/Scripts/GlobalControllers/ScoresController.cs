@@ -23,7 +23,7 @@ namespace GlobalControllers
 		}
 
 		public static int GetPoints(string name) => _instance.ScoreInfos.Single(
-				si => si.GameObject.name
+				si => si.Name
 					== name.Replace("(Clone)", string.Empty)
 						.Trim())
 			.Points;

@@ -10,7 +10,7 @@ namespace Utilities
 	[Serializable]
 	public class ScoreInfo
 	{
-		public GameObject GameObject;
+		public string Name;
 		public int Points;
 	}
 }

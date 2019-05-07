@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace MovementControllers
 {
-	public class AsteroidController : MonoBehaviour
+	public class RotationsController : MonoBehaviour
 	{
 		public float Tumble = 1f;
 
