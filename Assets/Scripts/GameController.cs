@@ -9,8 +9,6 @@ using UnityEngine.UI;
 public class GameController : MonoBehaviour
 {
 	private Transform _enemiesContainer;
-
-	private bool _playerIsAlive = true;
 	private int _score;
 
 	public GameObject[] Enemies;
@@ -22,11 +20,14 @@ public class GameController : MonoBehaviour
 	public float StartDelay;
 	public int WavesSpawnOffset;
 
+	public static bool PlayerIsAlive { get; private set; } = true;
+
 	private void Awake()
 	{
 		this._enemiesContainer = GameObject.FindWithTag("EnemiesContainer")
 			.transform;
 
+		PlayerIsAlive = true;
 		this.ScoreBoard.gameObject.SetActive(true);
 		this.RestartMenu.SetActive(false);
 	}
@@ -41,7 +42,7 @@ public class GameController : MonoBehaviour
 	{
 		yield return new WaitForSeconds(this.StartDelay);
 
-		while (this._playerIsAlive)
+		while (PlayerIsAlive)
 		{
 			for (int i = 0; i < this.EnemiesPerWave; i++)
 			{
@@ -71,7 +72,7 @@ public class GameController : MonoBehaviour
 
 	public void GameOver()
 	{
-		this._playerIsAlive = false;
+		PlayerIsAlive = false;
 
 		this.ScoreBoard.gameObject.SetActive(false);
 
