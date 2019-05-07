@@ -33,6 +33,7 @@ public class WeaponController : MonoBehaviour
 
 		GameObject bolt = Instantiate(this.Bolt, this._shotsContainer);
 		bolt.transform.position = this._shipRigidbody.position + Vector3.forward;
+		bolt.transform.rotation = this._shipRigidbody.rotation;
 
 		this._audioSource.Play();
 	}
