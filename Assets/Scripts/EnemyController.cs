@@ -1,5 +1,7 @@
 #region
 
+using GlobalControllers;
+using Helpers;
 using UnityEngine;
 
 #endregion
@@ -24,8 +26,7 @@ public class EnemyController : MonoBehaviour
 
 		this._gameController.GameOver();
 
-		// TODO: Use extension method.
-		Destroy(player.gameObject);
+		other.DestroyCollider();
 		Destroy(this.gameObject);
 	}
 }
