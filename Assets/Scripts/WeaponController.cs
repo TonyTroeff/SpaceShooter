@@ -25,7 +25,7 @@ public class WeaponController : MonoBehaviour
 	{
 		if (GameController.PlayerIsAlive == false
 			|| Time.time < this._nextShot
-			|| Input.GetButton("Fire1") != this.ShouldWaitForInput) return;
+			|| this.ShouldWaitForInput && Input.GetButton("Fire1") == false) return;
 
 		this._nextShot = Time.time + this.FireRate;
 
