@@ -1,8 +1,10 @@
 #region
 
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 #endregion
 
@@ -37,6 +39,8 @@ public class GameController : MonoBehaviour
 		this.StartCoroutine(this.SpawnWave());
 		this.UpdateScore();
 	}
+
+	private void OnApplicationQuit() { PlayerPrefs.Save(); }
 
 	private IEnumerator<WaitForSeconds> SpawnWave()
 	{
