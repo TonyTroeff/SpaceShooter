@@ -1,10 +1,8 @@
 #region
 
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using Random = UnityEngine.Random;
 
 #endregion
 
@@ -18,7 +16,6 @@ public class GameController : MonoBehaviour
 	public float EnemiesSpawnOffset;
 	public GameObject RestartMenu;
 	public Text ScoreBoard;
-	public Vector3 SpawnDimensions;
 	public float StartDelay;
 	public int WavesSpawnOffset;
 
@@ -52,9 +49,9 @@ public class GameController : MonoBehaviour
 			{
 				int randomIndex = Random.Range(0, this.Enemies.Length);
 				Vector3 spawnPosition = new Vector3(
-					Random.Range(this.SpawnDimensions.x * -1, this.SpawnDimensions.x),
-					this.SpawnDimensions.y,
-					this.SpawnDimensions.z);
+					Random.Range(ScreenController.Dimensions.x * -1, ScreenController.Dimensions.x),
+					0,
+					ScreenController.Dimensions.z);
 
 				GameObject obstacle = Instantiate(this.Enemies[randomIndex], this._enemiesContainer);
 				obstacle.transform.position = spawnPosition;

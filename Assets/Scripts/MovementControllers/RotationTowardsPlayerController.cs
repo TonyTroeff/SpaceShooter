@@ -29,11 +29,15 @@ namespace MovementControllers
 				Vector3 playerPosition = this._player.position;
 				Vector3 rigidbodyPosition = this._rigidbody.position;
 
+				float yRotation =
+					Mathf.Atan((rigidbodyPosition.x - playerPosition.x) / (rigidbodyPosition.z - playerPosition.z))
+					* Mathf.Rad2Deg;
+				
 				rotation = Quaternion.Euler(
 					0,
-					180
-					+ Mathf.Atan((playerPosition.x - rigidbodyPosition.x) / (playerPosition.z - rigidbodyPosition.z))
-					* Mathf.Rad2Deg,
+					playerPosition.z > rigidbodyPosition.z
+						? yRotation
+						: 180 + yRotation,
 					0);
 			}
 			else
