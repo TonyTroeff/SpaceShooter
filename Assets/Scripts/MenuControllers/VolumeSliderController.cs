@@ -1,13 +1,17 @@
+#region
+
 using GlobalControllers;
 using UnityEngine;
 using UnityEngine.UI;
+
+#endregion
 
 namespace MenuControllers
 {
 	public class VolumeSliderController : MonoBehaviour
 	{
 		public string Source;
-		
+
 		private void Start()
 		{
 			this.GetComponent<Slider>()

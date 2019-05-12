@@ -1,6 +1,11 @@
+#region
+
 using UnityEngine;
 
-namespace ResizeControllers {
+#endregion
+
+namespace ResizeControllers
+{
 	public class BorderResizeController : MonoBehaviour
 	{
 		private void Start()

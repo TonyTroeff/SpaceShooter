@@ -20,7 +20,10 @@ public class PlayerController : MonoBehaviour
 
 		this._rigidbody.velocity = new Vector3(horizontalMovement, 0f, verticalMovement) * this.Speed;
 		this._rigidbody.position = new Vector3(
-			Mathf.Clamp(this._rigidbody.position.x, -(ScreenController.Dimensions.x - 1), ScreenController.Dimensions.x - 1),
+			Mathf.Clamp(
+				this._rigidbody.position.x,
+				-(ScreenController.Dimensions.x - 1),
+				ScreenController.Dimensions.x - 1),
 			0f,
 			Mathf.Clamp(this._rigidbody.position.z, -3.5f, ScreenController.Dimensions.z - 1));
 		this._rigidbody.rotation = Quaternion.Euler(0f, 0f, this._rigidbody.velocity.x * this.Tilt * -1);

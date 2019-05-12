@@ -1,4 +1,8 @@
+#region
+
 using UnityEngine;
+
+#endregion
 
 public class ScreenController : MonoBehaviour
 {
@@ -8,7 +12,5 @@ public class ScreenController : MonoBehaviour
 	{
 		Vector3 screenValues = new Vector3(Screen.width, Screen.height, 0);
 		Dimensions = Camera.main.ScreenToWorldPoint(screenValues);
-		
-		Debug.Log(Dimensions);
 	}
 }

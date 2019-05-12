@@ -32,7 +32,7 @@ namespace MovementControllers
 				float yRotation =
 					Mathf.Atan((rigidbodyPosition.x - playerPosition.x) / (rigidbodyPosition.z - playerPosition.z))
 					* Mathf.Rad2Deg;
-				
+
 				rotation = Quaternion.Euler(
 					0,
 					playerPosition.z > rigidbodyPosition.z

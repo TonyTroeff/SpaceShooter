@@ -10,7 +10,7 @@ namespace MovementControllers
 	{
 		private Transform _player;
 		private Rigidbody _rigidbody;
-		
+
 		public float Speed = 1;
 
 		private void Awake()

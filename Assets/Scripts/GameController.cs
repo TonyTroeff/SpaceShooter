@@ -1,6 +1,7 @@
 #region
 
 using System.Collections.Generic;
+using Helpers;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +10,7 @@ using UnityEngine.UI;
 public class GameController : MonoBehaviour
 {
 	private Transform _enemiesContainer;
+	private bool _pause = true;
 	private int _score;
 
 	public GameObject[] Enemies;
@@ -16,6 +18,7 @@ public class GameController : MonoBehaviour
 	public float EnemiesSpawnOffset;
 	public GameObject RestartMenu;
 	public Text ScoreBoard;
+	public GameObject SettingsMenu;
 	public float StartDelay;
 	public int WavesSpawnOffset;
 
@@ -35,6 +38,14 @@ public class GameController : MonoBehaviour
 	{
 		this.StartCoroutine(this.SpawnWave());
 		this.UpdateScore();
+	}
+
+	private void Update()
+	{
+		if (Input.GetKeyDown(KeyCode.Escape) == false) return;
+
+		MenuHelper.ToggleSettingsMenu(this.SettingsMenu, this._pause);
+		this._pause = !this._pause;
 	}
 
 	private void OnApplicationQuit() { PlayerPrefs.Save(); }
