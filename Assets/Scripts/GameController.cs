@@ -49,9 +49,9 @@ public class GameController : MonoBehaviour
 			{
 				int randomIndex = Random.Range(0, this.Enemies.Length);
 				Vector3 spawnPosition = new Vector3(
-					Random.Range(ScreenController.Dimensions.x * -1, ScreenController.Dimensions.x),
+					Random.Range(-(ScreenController.Dimensions.x - 1), ScreenController.Dimensions.x - 1),
 					0,
-					ScreenController.Dimensions.z);
+					ScreenController.Dimensions.z + 1);
 
 				GameObject obstacle = Instantiate(this.Enemies[randomIndex], this._enemiesContainer);
 				obstacle.transform.position = spawnPosition;

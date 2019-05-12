@@ -9,6 +9,8 @@ namespace GlobalControllers
 {
 	public class SoundController : MonoBehaviour
 	{
+		private static readonly string[] _audioMixerVariables = { "BackgroundVolume", "SFXVolume" };
+
 		public AudioMixer AudioMixer;
 
 		public static SoundController Instance { get; private set; }
@@ -23,16 +25,19 @@ namespace GlobalControllers
 
 		private void Start()
 		{
-			float initialVolumeLevel = PlayerPrefs.GetFloat("MasterVolume", 1f);
-			ChangeVolume(initialVolumeLevel);
+			foreach (string audioMixerVariable in _audioMixerVariables)
+			{
+				float backgroundVolumeLevel = PlayerPrefs.GetFloat(audioMixerVariable, 1f);
+				ChangeVolume(backgroundVolumeLevel, audioMixerVariable);
+			}
 		}
 
-		public static void ChangeVolume(float newVolumeLevel)
+		public static void ChangeVolume(float newVolumeLevel, string source)
 		{
-			PlayerPrefs.SetFloat("MasterVolume", newVolumeLevel);
+			PlayerPrefs.SetFloat(source, newVolumeLevel);
 
 			float convertedVolumeLevel = ConvertToDecibels(newVolumeLevel);
-			Instance.AudioMixer.SetFloat("MasterVolume", convertedVolumeLevel);
+			Instance.AudioMixer.SetFloat(source, convertedVolumeLevel);
 		}
 
 		private static float ConvertToDecibels(float volumeLevel) => Mathf.Log10(volumeLevel) * 20f;
