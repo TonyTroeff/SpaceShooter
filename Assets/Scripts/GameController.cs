@@ -10,7 +10,6 @@ using UnityEngine.UI;
 public class GameController : MonoBehaviour
 {
 	private Transform _enemiesContainer;
-	private bool _pause = true;
 	private int _score;
 
 	public GameObject[] Enemies;
@@ -28,10 +27,7 @@ public class GameController : MonoBehaviour
 	{
 		this._enemiesContainer = GameObject.FindWithTag("EnemiesContainer")
 			.transform;
-
-		PlayerIsAlive = true;
 		this.ScoreBoard.gameObject.SetActive(true);
-		this.RestartMenu.SetActive(false);
 	}
 
 	private void Start()
@@ -44,8 +40,7 @@ public class GameController : MonoBehaviour
 	{
 		if (Input.GetKeyDown(KeyCode.Escape) == false) return;
 
-		MenuHelper.ToggleSettingsMenu(this.SettingsMenu, this._pause);
-		this._pause = !this._pause;
+		MenuHelper.ToggleSettingsMenu(this.SettingsMenu);
 	}
 
 	private void OnApplicationQuit() { PlayerPrefs.Save(); }

@@ -1,5 +1,6 @@
 #region
 
+using Helpers;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -9,6 +10,6 @@ namespace MenuControllers
 {
 	public class RestartButtonController : MonoBehaviour
 	{
-		public void Restart() => SceneManager.LoadScene(0);
+		public void Restart() => MenuHelper.Restart();
 	}
 }
