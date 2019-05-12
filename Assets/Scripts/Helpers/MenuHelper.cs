@@ -31,5 +31,7 @@ namespace Helpers
 			if (_isPaused) TogglePause();
 			SceneManager.LoadScene(0);
 		}
+
+		public static void Exit() => Application.Quit();
 	}
 }

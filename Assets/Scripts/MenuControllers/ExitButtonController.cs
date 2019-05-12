@@ -1,5 +1,6 @@
 #region
 
+using Helpers;
 using UnityEngine;
 
 #endregion
@@ -8,6 +9,6 @@ namespace MenuControllers
 {
 	public class ExitButtonController : MonoBehaviour
 	{
-		public void Exit() => Application.Quit();
+		public void Exit() => MenuHelper.Exit();
 	}
 }

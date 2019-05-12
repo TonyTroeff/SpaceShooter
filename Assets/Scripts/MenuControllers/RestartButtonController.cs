@@ -2,7 +2,6 @@
 
 using Helpers;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 #endregion
 
