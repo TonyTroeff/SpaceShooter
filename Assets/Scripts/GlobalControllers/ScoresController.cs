@@ -1,16 +1,12 @@
-#region
-
-using System.Linq;
-using UnityEngine;
-using Utilities;
-
-#endregion
-
 namespace GlobalControllers
 {
+	using System.Linq;
+	using UnityEngine;
+	using Utilities;
+
 	public class ScoresController : MonoBehaviour
 	{
-		private static ScoresController _instance;
+		static private ScoresController _instance;
 
 		public ScoreInfo[] ScoreInfos;
 
@@ -22,10 +18,10 @@ namespace GlobalControllers
 			DontDestroyOnLoad(_instance);
 		}
 
-		public static int GetPoints(string name) => _instance.ScoreInfos.Single(
-				si => si.Name
-					== name.Replace("(Clone)", string.Empty)
+		static public int GetPoints(string name)
+			=> _instance.ScoreInfos.Single(
+					si => si.Name == name.Replace("(Clone)", string.Empty)
 						.Trim())
-			.Points;
+				.Points;
 	}
 }

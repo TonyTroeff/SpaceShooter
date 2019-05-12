@@ -1,10 +1,6 @@
-#region
-
 using GlobalControllers;
 using Helpers;
 using UnityEngine;
-
-#endregion
 
 public class BoltController : MonoBehaviour
 {
@@ -12,7 +8,7 @@ public class BoltController : MonoBehaviour
 
 	public bool IsPlayerBolt;
 
-	private void Awake() { this._gameController = FindObjectOfType<GameController>(); }
+	private void Awake() => this._gameController = FindObjectOfType<GameController>();
 
 	private void OnTriggerEnter(Collider other)
 	{

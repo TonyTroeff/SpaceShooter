@@ -1,19 +1,16 @@
-#region
-
-using UnityEngine;
-
-#endregion
-
 namespace Helpers
 {
-	public static class ColliderHelper
+	using UnityEngine;
+
+	static public class ColliderHelper
 	{
-		public static Transform GetParent(this Collider collider) => collider.transform.parent;
+		static public Transform GetParent(this Collider collider) => collider.transform.parent;
 
-		public static bool CompareParentTag(this Collider collider, string tag) => GetParent(collider)
-			.CompareTag(tag);
+		static public bool CompareParentTag(this Collider collider, string tag)
+			=> GetParent(collider)
+				.CompareTag(tag);
 
-		public static void DestroyCollider(this Collider collider)
+		static public void DestroyCollider(this Collider collider)
 		{
 			if (collider.CompareTag("Bolt")) Object.Destroy(collider.gameObject);
 			else

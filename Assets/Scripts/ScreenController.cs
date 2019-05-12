@@ -1,12 +1,8 @@
-#region
-
 using UnityEngine;
-
-#endregion
 
 public class ScreenController : MonoBehaviour
 {
-	public static Vector3 Dimensions { get; private set; }
+	static public Vector3 Dimensions { get; private set; }
 
 	private void Awake()
 	{

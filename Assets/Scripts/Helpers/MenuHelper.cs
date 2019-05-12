@@ -1,37 +1,32 @@
-#region
-
-using UnityEngine;
-using UnityEngine.SceneManagement;
-
-#endregion
-
 namespace Helpers
 {
-	public static class MenuHelper
-	{
-		private static bool _isPaused;
+	using UnityEngine;
+	using UnityEngine.SceneManagement;
 
-		public static void ToggleSettingsMenu(GameObject settingsMenu)
+	static public class MenuHelper
+	{
+		static private bool _isPaused;
+
+		static public void ToggleSettingsMenu(GameObject settingsMenu)
 		{
 			settingsMenu.SetActive(!_isPaused);
 
 			TogglePause();
 		}
 
-		public static void TogglePause()
+		static public void TogglePause()
 		{
-			Time.timeScale = _isPaused
-				? 1
-				: 0;
+			Time.timeScale = _isPaused ? 1 : 0;
+
 			_isPaused = !_isPaused;
 		}
 
-		public static void Restart()
+		static public void Restart()
 		{
 			if (_isPaused) TogglePause();
 			SceneManager.LoadScene(0);
 		}
 
-		public static void Exit() => Application.Quit();
+		static public void Exit() => Application.Quit();
 	}
 }

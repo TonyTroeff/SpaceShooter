@@ -1,11 +1,7 @@
-#region
-
 using System.Collections.Generic;
 using Helpers;
 using UnityEngine;
 using UnityEngine.UI;
-
-#endregion
 
 public class GameController : MonoBehaviour
 {
@@ -21,14 +17,11 @@ public class GameController : MonoBehaviour
 	public float StartDelay;
 	public int WavesSpawnOffset;
 
-	public static bool PlayerIsAlive { get; private set; } = true;
+	static public bool PlayerIsAlive { get; private set; } = true;
 
 	private void Awake()
-	{
-		this._enemiesContainer = GameObject.FindWithTag("EnemiesContainer")
+		=> this._enemiesContainer = GameObject.FindWithTag("EnemiesContainer")
 			.transform;
-		this.ScoreBoard.gameObject.SetActive(true);
-	}
 
 	private void Start()
 	{
@@ -43,7 +36,7 @@ public class GameController : MonoBehaviour
 		MenuHelper.ToggleSettingsMenu(this.SettingsMenu);
 	}
 
-	private void OnApplicationQuit() { PlayerPrefs.Save(); }
+	private void OnApplicationQuit() => PlayerPrefs.Save();
 
 	private IEnumerator<WaitForSeconds> SpawnWave()
 	{
@@ -54,6 +47,7 @@ public class GameController : MonoBehaviour
 			for (int i = 0; i < this.EnemiesPerWave; i++)
 			{
 				int randomIndex = Random.Range(0, this.Enemies.Length);
+
 				Vector3 spawnPosition = new Vector3(
 					Random.Range(-(ScreenController.Dimensions.x - 1), ScreenController.Dimensions.x - 1),
 					0,
@@ -80,12 +74,13 @@ public class GameController : MonoBehaviour
 	public void GameOver()
 	{
 		PlayerIsAlive = false;
-
 		this.ScoreBoard.gameObject.SetActive(false);
 
 		this.RestartMenu.SetActive(true);
+
 		Text gameOverText = this.RestartMenu.gameObject.transform.Find("PointsText")
 			.GetComponent<Text>();
+
 		gameOverText.text = $"You scored {this._score} points.";
 	}
 }

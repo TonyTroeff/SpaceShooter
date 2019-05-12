@@ -1,19 +1,15 @@
-#region
-
-using UnityEngine;
-using UnityEngine.Audio;
-
-#endregion
-
 namespace GlobalControllers
 {
+	using UnityEngine;
+	using UnityEngine.Audio;
+
 	public class SoundController : MonoBehaviour
 	{
-		private static readonly string[] _audioMixerVariables = { "BackgroundVolume", "SFXVolume" };
+		static readonly private string[] _audioMixerVariables = { "BackgroundVolume", "SFXVolume" };
 
 		public AudioMixer AudioMixer;
 
-		public static SoundController Instance { get; private set; }
+		static public SoundController Instance { get; private set; }
 
 		private void Awake()
 		{
@@ -32,7 +28,7 @@ namespace GlobalControllers
 			}
 		}
 
-		public static void ChangeVolume(float newVolumeLevel, string source)
+		static public void ChangeVolume(float newVolumeLevel, string source)
 		{
 			PlayerPrefs.SetFloat(source, newVolumeLevel);
 
@@ -40,6 +36,6 @@ namespace GlobalControllers
 			Instance.AudioMixer.SetFloat(source, convertedVolumeLevel);
 		}
 
-		private static float ConvertToDecibels(float volumeLevel) => Mathf.Log10(volumeLevel) * 20f;
+		static private float ConvertToDecibels(float volumeLevel) => Mathf.Log10(volumeLevel) * 20f;
 	}
 }

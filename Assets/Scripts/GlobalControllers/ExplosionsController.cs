@@ -1,15 +1,11 @@
-#region
-
-using System.Linq;
-using UnityEngine;
-
-#endregion
-
 namespace GlobalControllers
 {
+	using System.Linq;
+	using UnityEngine;
+
 	public class ExplosionsController : MonoBehaviour
 	{
-		private static ExplosionsController _instance;
+		static private ExplosionsController _instance;
 
 		private Transform _explosionsContainer;
 
@@ -26,10 +22,10 @@ namespace GlobalControllers
 				.transform;
 		}
 
-		public static GameObject GetExplosion(string tagName)
+		static public GameObject GetExplosion(string tagName)
 			=> _instance.Explosions.SingleOrDefault(e => e.name == $"{tagName}Explosion");
 
-		public static void Execute(GameObject explosion, Transform position)
+		static public void Execute(GameObject explosion, Transform position)
 		{
 			if (explosion == null) return;
 

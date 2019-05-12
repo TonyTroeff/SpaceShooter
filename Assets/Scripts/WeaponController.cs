@@ -1,8 +1,4 @@
-#region
-
 using UnityEngine;
-
-#endregion
 
 public class WeaponController : MonoBehaviour
 {
@@ -17,6 +13,7 @@ public class WeaponController : MonoBehaviour
 	private void Awake()
 	{
 		this._audioSource = this.GetComponent<AudioSource>();
+
 		this._shotsContainer = GameObject.FindWithTag("ShotsContainer")
 			.transform;
 	}

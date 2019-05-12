@@ -1,14 +1,10 @@
-#region
-
-using UnityEngine;
-
-#endregion
-
 namespace MovementControllers
 {
+	using UnityEngine;
+
 	public class RotationTowardsPlayerController : MonoBehaviour
 	{
-		private readonly Quaternion _finalRotation = Quaternion.Euler(0, 180, 0);
+		readonly private Quaternion _finalRotation = Quaternion.Euler(0, 180, 0);
 		private Transform _player;
 		private Rigidbody _rigidbody;
 		public float FinalRotationSpeed;
@@ -17,6 +13,7 @@ namespace MovementControllers
 		{
 			this._player = GameObject.FindWithTag("Player")
 				?.transform;
+
 			this._rigidbody = this.GetComponent<Rigidbody>();
 		}
 
@@ -33,12 +30,7 @@ namespace MovementControllers
 					Mathf.Atan((rigidbodyPosition.x - playerPosition.x) / (rigidbodyPosition.z - playerPosition.z))
 					* Mathf.Rad2Deg;
 
-				rotation = Quaternion.Euler(
-					0,
-					playerPosition.z > rigidbodyPosition.z
-						? yRotation
-						: 180 + yRotation,
-					0);
+				rotation = Quaternion.Euler(0, playerPosition.z > rigidbodyPosition.z ? yRotation : 180 + yRotation, 0);
 			}
 			else
 			{

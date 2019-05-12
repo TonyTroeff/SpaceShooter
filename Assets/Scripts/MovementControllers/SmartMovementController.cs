@@ -1,11 +1,7 @@
-#region
-
-using UnityEngine;
-
-#endregion
-
 namespace MovementControllers
 {
+	using UnityEngine;
+
 	public class SmartMovementController : MonoBehaviour
 	{
 		private Transform _player;
@@ -17,15 +13,16 @@ namespace MovementControllers
 		{
 			this._player = GameObject.FindWithTag("Player")
 				.transform;
+
 			this._rigidbody = this.GetComponent<Rigidbody>();
 		}
 
 		private void Start()
 		{
 			Vector3 rigidbodyPosition = this._rigidbody.position;
+
 			this._rigidbody.velocity = (rigidbodyPosition
-					- Vector3.MoveTowards(rigidbodyPosition, this._player.position, 1))
-				* this.Speed;
+				- Vector3.MoveTowards(rigidbodyPosition, this._player.position, 1)) * this.Speed;
 		}
 	}
 }

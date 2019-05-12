@@ -1,16 +1,12 @@
-#region
-
 using GlobalControllers;
 using Helpers;
 using UnityEngine;
-
-#endregion
 
 public class EnemyController : MonoBehaviour
 {
 	private GameController _gameController;
 
-	private void Awake() { this._gameController = FindObjectOfType<GameController>(); }
+	private void Awake() => this._gameController = FindObjectOfType<GameController>();
 
 	private void OnTriggerEnter(Collider other)
 	{

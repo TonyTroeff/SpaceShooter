@@ -1,12 +1,8 @@
-#region
-
-using Helpers;
-using UnityEngine;
-
-#endregion
-
 namespace MenuControllers
 {
+	using Helpers;
+	using UnityEngine;
+
 	public class ExitButtonController : MonoBehaviour
 	{
 		public void Exit() => MenuHelper.Exit();

@@ -1,11 +1,7 @@
-#region
-
-using UnityEngine;
-
-#endregion
-
 namespace ResizeControllers
 {
+	using UnityEngine;
+
 	public class StarFieldResizeController : MonoBehaviour
 	{
 		private void Start()

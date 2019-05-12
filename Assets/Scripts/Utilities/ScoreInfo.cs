@@ -1,11 +1,7 @@
-#region
-
-using System;
-
-#endregion
-
 namespace Utilities
 {
+	using System;
+
 	[Serializable]
 	public class ScoreInfo
 	{
