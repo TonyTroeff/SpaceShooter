@@ -4,9 +4,10 @@ namespace MovementControllers
 
 	public class RotationTowardsPlayerController : MonoBehaviour
 	{
-		readonly private Quaternion _finalRotation = Quaternion.Euler(0, 180, 0);
+		private readonly Quaternion _finalRotation = Quaternion.Euler(0, 180, 0);
 		private Transform _player;
 		private Rigidbody _rigidbody;
+
 		public float FinalRotationSpeed;
 
 		private void Awake()
@@ -17,7 +18,11 @@ namespace MovementControllers
 			this._rigidbody = this.GetComponent<Rigidbody>();
 		}
 
-		private void FixedUpdate()
+		private void Start() => this.transform.rotation = this.CalculateRotation();
+
+		private void FixedUpdate() => this._rigidbody.MoveRotation(this.CalculateRotation());
+
+		private Quaternion CalculateRotation()
 		{
 			Quaternion rotation;
 
@@ -44,7 +49,7 @@ namespace MovementControllers
 						0);
 			}
 
-			this._rigidbody.MoveRotation(rotation);
+			return rotation;
 		}
 	}
 }

@@ -5,11 +5,11 @@ namespace GlobalControllers
 
 	public class SoundController : MonoBehaviour
 	{
-		static readonly private string[] _audioMixerVariables = { "BackgroundVolume", "SFXVolume" };
+		private static readonly string[] _audioMixerVariables = { "BackgroundVolume", "SFXVolume" };
 
 		public AudioMixer AudioMixer;
 
-		static public SoundController Instance { get; private set; }
+		public static SoundController Instance { get; private set; }
 
 		private void Awake()
 		{
@@ -28,7 +28,7 @@ namespace GlobalControllers
 			}
 		}
 
-		static public void ChangeVolume(float newVolumeLevel, string source)
+		public static void ChangeVolume(float newVolumeLevel, string source)
 		{
 			PlayerPrefs.SetFloat(source, newVolumeLevel);
 
@@ -36,6 +36,6 @@ namespace GlobalControllers
 			Instance.AudioMixer.SetFloat(source, convertedVolumeLevel);
 		}
 
-		static private float ConvertToDecibels(float volumeLevel) => Mathf.Log10(volumeLevel) * 20f;
+		private static float ConvertToDecibels(float volumeLevel) => Mathf.Log10(volumeLevel) * 20f;
 	}
 }

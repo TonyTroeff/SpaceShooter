@@ -1,4 +1,3 @@
-using GlobalControllers;
 using Helpers;
 using UnityEngine;
 
@@ -13,12 +12,12 @@ public class EnemyController : MonoBehaviour
 		if (other.CompareTag("Border")
 			|| other.CompareParentTag("Player") == false) return;
 
-		GameObject selfExplosion = ExplosionsController.GetExplosion(this.tag);
-		ExplosionsController.Execute(selfExplosion, this.transform);
+		GameObject selfExplosion = ExplosionsHelper.GetExplosion(this.gameObject);
+		ExplosionsHelper.Execute(selfExplosion, this.transform);
 
-		Transform player = other.GetParent();
-		GameObject playerExplosion = ExplosionsController.GetExplosion(player.tag);
-		ExplosionsController.Execute(playerExplosion, other.transform);
+		GameObject player = other.GetParent();
+		GameObject playerExplosion = ExplosionsHelper.GetExplosion(player);
+		ExplosionsHelper.Execute(playerExplosion, other.transform);
 
 		this._gameController.GameOver();
 

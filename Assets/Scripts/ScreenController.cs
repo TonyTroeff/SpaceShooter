@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class ScreenController : MonoBehaviour
 {
-	static public Vector3 Dimensions { get; private set; }
+	public static Vector3 Dimensions { get; private set; }
 
 	private void Awake()
 	{

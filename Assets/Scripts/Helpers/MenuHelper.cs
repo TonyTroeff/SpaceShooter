@@ -3,30 +3,30 @@ namespace Helpers
 	using UnityEngine;
 	using UnityEngine.SceneManagement;
 
-	static public class MenuHelper
+	public static class MenuHelper
 	{
-		static private bool _isPaused;
+		private static bool _isPaused;
 
-		static public void ToggleSettingsMenu(GameObject settingsMenu)
+		public static void ToggleSettingsMenu(GameObject settingsMenu)
 		{
 			settingsMenu.SetActive(!_isPaused);
 
 			TogglePause();
 		}
 
-		static public void TogglePause()
+		public static void TogglePause()
 		{
 			Time.timeScale = _isPaused ? 1 : 0;
 
 			_isPaused = !_isPaused;
 		}
 
-		static public void Restart()
+		public static void Restart()
 		{
 			if (_isPaused) TogglePause();
 			SceneManager.LoadScene(0);
 		}
 
-		static public void Exit() => Application.Quit();
+		public static void Exit() => Application.Quit();
 	}
 }

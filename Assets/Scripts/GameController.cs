@@ -5,8 +5,11 @@ using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
+	public delegate void OnWaveSpawnDelegate(int waveCount);
+
 	private Transform _enemiesContainer;
 	private int _score;
+	private int _waveCount;
 
 	public GameObject[] Enemies;
 	public int EnemiesPerWave;
@@ -17,7 +20,9 @@ public class GameController : MonoBehaviour
 	public float StartDelay;
 	public int WavesSpawnOffset;
 
-	static public bool PlayerIsAlive { get; private set; } = true;
+	public static bool PlayerIsAlive { get; private set; } = true;
+
+	public static event OnWaveSpawnDelegate OnWaveSpawn;
 
 	private void Awake()
 		=> this._enemiesContainer = GameObject.FindWithTag("EnemiesContainer")
@@ -44,6 +49,8 @@ public class GameController : MonoBehaviour
 
 		while (PlayerIsAlive)
 		{
+			OnWaveSpawn?.Invoke(this._waveCount);
+
 			for (int i = 0; i < this.EnemiesPerWave; i++)
 			{
 				int randomIndex = Random.Range(0, this.Enemies.Length);
@@ -58,6 +65,8 @@ public class GameController : MonoBehaviour
 
 				yield return new WaitForSeconds(this.EnemiesSpawnOffset);
 			}
+
+			this._waveCount++;
 
 			yield return new WaitForSeconds(this.WavesSpawnOffset);
 		}
@@ -74,13 +83,12 @@ public class GameController : MonoBehaviour
 	public void GameOver()
 	{
 		PlayerIsAlive = false;
-		this.ScoreBoard.gameObject.SetActive(false);
 
+		this.ScoreBoard.gameObject.SetActive(false);
 		this.RestartMenu.SetActive(true);
 
-		Text gameOverText = this.RestartMenu.gameObject.transform.Find("PointsText")
-			.GetComponent<Text>();
-
-		gameOverText.text = $"You scored {this._score} points.";
+		this.RestartMenu.gameObject.transform.Find("PointsText")
+			.GetComponent<Text>()
+			.text = $"You scored {this._score} points.";
 	}
 }

@@ -2,15 +2,15 @@ namespace Helpers
 {
 	using UnityEngine;
 
-	static public class ColliderHelper
+	public static class ColliderHelper
 	{
-		static public Transform GetParent(this Collider collider) => collider.transform.parent;
+		public static GameObject GetParent(this Collider collider) => collider.transform.parent.gameObject;
 
-		static public bool CompareParentTag(this Collider collider, string tag)
+		public static bool CompareParentTag(this Collider collider, string tag)
 			=> GetParent(collider)
 				.CompareTag(tag);
 
-		static public void DestroyCollider(this Collider collider)
+		public static void DestroyCollider(this Collider collider)
 		{
 			if (collider.CompareTag("Bolt")) Object.Destroy(collider.gameObject);
 			else

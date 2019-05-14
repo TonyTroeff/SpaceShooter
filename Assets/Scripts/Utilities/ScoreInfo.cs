@@ -1,11 +1,9 @@
 namespace Utilities
 {
-	using System;
+	using UnityEngine;
 
-	[Serializable]
-	public class ScoreInfo
+	public class ScoreInfo : MonoBehaviour
 	{
-		public string Name;
 		public int Points;
 	}
 }

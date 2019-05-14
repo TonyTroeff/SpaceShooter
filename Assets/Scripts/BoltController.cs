@@ -1,4 +1,3 @@
-using GlobalControllers;
 using Helpers;
 using UnityEngine;
 
@@ -16,16 +15,16 @@ public class BoltController : MonoBehaviour
 			|| other.CompareTag(this.tag)
 			|| other.CompareParentTag("Player") == this.IsPlayerBolt) return;
 
-		Transform target = other.GetParent();
-		GameObject explosion = ExplosionsController.GetExplosion(target.tag);
-		ExplosionsController.Execute(explosion, this.transform);
+		GameObject target = other.GetParent();
+		GameObject explosion = ExplosionsHelper.GetExplosion(target);
+		ExplosionsHelper.Execute(explosion, this.transform);
 
 		if (this.IsPlayerBolt)
 		{
-			int scores = ScoresController.GetPoints(target.gameObject.name);
+			int scores = ScoresHelper.GetPoints(target);
 			this._gameController.AddPoints(scores);
 		}
-		else if (target.CompareTag("Player")) this._gameController.GameOver();
+		else this._gameController.GameOver();
 
 		other.DestroyCollider();
 		Destroy(this.gameObject);
