@@ -19,7 +19,7 @@ namespace SpaceShooter
 		{
 			Transform backgroundTransform = this.transform;
 
-			Vector3 scale = new Vector3(ScreenController.Dimensions.x * 2, ScreenController.Dimensions.x * 4, 0);
+			Vector3 scale = new Vector3(ScreenController.Dimensions.x * 2f, ScreenController.Dimensions.x * 4f, 0);
 			backgroundTransform.localScale = scale;
 			this._backgroundLength = scale.y;
 
@@ -30,6 +30,8 @@ namespace SpaceShooter
 		{
 			if (this.transform.position.z <= 0) this.transform.position = new Vector3(0, -5, this._backgroundLength);
 		}
+
+		private void OnDestroy() => GameController.OnWaveSpawn -= this.UpdateSpeed;
 
 		private void UpdateSpeed(int waveCount)
 			=> this._rigidbody.velocity = new Vector3(0, -5, this.ScrollSpeed - waveCount / 10f);

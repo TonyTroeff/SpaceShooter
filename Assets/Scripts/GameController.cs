@@ -27,8 +27,11 @@ namespace SpaceShooter
 		public static event OnWaveSpawnDelegate OnWaveSpawn;
 
 		private void Awake()
-			=> this._enemiesContainer = GameObject.FindWithTag("EnemiesContainer")
+		{
+			PlayerIsAlive = true;
+			this._enemiesContainer = GameObject.FindWithTag("EnemiesContainer")
 				.transform;
+		}
 
 		private void Start()
 		{

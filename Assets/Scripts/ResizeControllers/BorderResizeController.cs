@@ -9,7 +9,7 @@ namespace SpaceShooter.ResizeControllers
 			Transform borderTransform = this.transform;
 
 			borderTransform.localScale = new Vector3(
-				ScreenController.Dimensions.x * 2,
+				ScreenController.Dimensions.x * 2f,
 				1,
 				ScreenController.Dimensions.z + borderTransform.position.z);
 		}

@@ -15,7 +15,6 @@ namespace SpaceShooter
 		private void Awake()
 		{
 			this._audioSource = this.GetComponent<AudioSource>();
-
 			this._shotsContainer = GameObject.FindWithTag("ShotsContainer")
 				.transform;
 		}
