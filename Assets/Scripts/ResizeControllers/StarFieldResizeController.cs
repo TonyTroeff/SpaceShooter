@@ -1,4 +1,4 @@
-namespace ResizeControllers
+namespace SpaceShooter.ResizeControllers
 {
 	using UnityEngine;
 

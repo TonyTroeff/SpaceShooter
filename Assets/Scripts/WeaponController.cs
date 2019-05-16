@@ -1,37 +1,40 @@
-using UnityEngine;
-
-public class WeaponController : MonoBehaviour
+namespace SpaceShooter
 {
-	private AudioSource _audioSource;
-	private float _nextShot;
-	private Transform _shotsContainer;
+	using UnityEngine;
 
-	public GameObject Bolt;
-	public float FireRate;
-	public bool ShouldWaitForInput;
-
-	private void Awake()
+	public class WeaponController : MonoBehaviour
 	{
-		this._audioSource = this.GetComponent<AudioSource>();
+		private AudioSource _audioSource;
+		private float _nextShot;
+		private Transform _shotsContainer;
 
-		this._shotsContainer = GameObject.FindWithTag("ShotsContainer")
-			.transform;
-	}
+		public GameObject Bolt;
+		public float FireRate;
+		public bool ShouldWaitForInput;
 
-	private void Update()
-	{
-		if (GameController.PlayerIsAlive == false
-			|| Time.time < this._nextShot
-			|| this.ShouldWaitForInput && Input.GetButton("Fire1") == false) return;
+		private void Awake()
+		{
+			this._audioSource = this.GetComponent<AudioSource>();
 
-		this._nextShot = Time.time + this.FireRate;
+			this._shotsContainer = GameObject.FindWithTag("ShotsContainer")
+				.transform;
+		}
 
-		GameObject bolt = Instantiate(this.Bolt, this._shotsContainer);
+		private void Update()
+		{
+			if (GameController.PlayerIsAlive == false
+				|| Time.time < this._nextShot
+				|| this.ShouldWaitForInput && Input.GetButton("Fire1") == false) return;
 
-		Transform weaponTransform = this.transform;
-		bolt.transform.position = weaponTransform.position;
-		bolt.transform.rotation = weaponTransform.rotation;
+			this._nextShot = Time.time + this.FireRate;
 
-		this._audioSource.Play();
+			GameObject bolt = Instantiate(this.Bolt, this._shotsContainer);
+
+			Transform weaponTransform = this.transform;
+			bolt.transform.position = weaponTransform.position;
+			bolt.transform.rotation = weaponTransform.rotation;
+
+			this._audioSource.Play();
+		}
 	}
 }

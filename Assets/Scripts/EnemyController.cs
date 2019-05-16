@@ -1,27 +1,30 @@
-using Helpers;
-using UnityEngine;
-
-public class EnemyController : MonoBehaviour
+namespace SpaceShooter
 {
-	private GameController _gameController;
+	using Helpers;
+	using UnityEngine;
 
-	private void Awake() => this._gameController = FindObjectOfType<GameController>();
-
-	private void OnTriggerEnter(Collider other)
+	public class EnemyController : MonoBehaviour
 	{
-		if (other.CompareTag("Border")
-			|| other.CompareParentTag("Player") == false) return;
+		private GameController _gameController;
 
-		GameObject selfExplosion = ExplosionsHelper.GetExplosion(this.gameObject);
-		ExplosionsHelper.Execute(selfExplosion, this.transform);
+		private void Awake() => this._gameController = FindObjectOfType<GameController>();
 
-		GameObject player = other.GetParent();
-		GameObject playerExplosion = ExplosionsHelper.GetExplosion(player);
-		ExplosionsHelper.Execute(playerExplosion, other.transform);
+		private void OnTriggerEnter(Collider other)
+		{
+			if (other.CompareTag("Border")
+				|| other.CompareParentTag("Player") == false) return;
 
-		this._gameController.GameOver();
+			GameObject selfExplosion = ExplosionsHelper.GetExplosion(this.gameObject);
+			ExplosionsHelper.Execute(selfExplosion, this.transform);
 
-		other.DestroyCollider();
-		Destroy(this.gameObject);
+			GameObject player = other.GetParent();
+			GameObject playerExplosion = ExplosionsHelper.GetExplosion(player);
+			ExplosionsHelper.Execute(playerExplosion, other.transform);
+
+			this._gameController.GameOver();
+
+			other.DestroyCollider();
+			Destroy(this.gameObject);
+		}
 	}
 }

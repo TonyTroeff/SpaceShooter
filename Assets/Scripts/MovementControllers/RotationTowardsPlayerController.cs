@@ -1,4 +1,4 @@
-namespace MovementControllers
+namespace SpaceShooter.MovementControllers
 {
 	using UnityEngine;
 
@@ -31,23 +31,20 @@ namespace MovementControllers
 				Vector3 playerPosition = this._player.position;
 				Vector3 rigidbodyPosition = this._rigidbody.position;
 
-				float yRotation =
-					Mathf.Atan((rigidbodyPosition.x - playerPosition.x) / (rigidbodyPosition.z - playerPosition.z))
-					* Mathf.Rad2Deg;
+				rotation = Quaternion.LookRotation(playerPosition - rigidbodyPosition);
 
-				rotation = Quaternion.Euler(0, playerPosition.z > rigidbodyPosition.z ? yRotation : 180 + yRotation, 0);
+				// Maths:
+				// float yRotation =
+				// 	Mathf.Atan((rigidbodyPosition.x - playerPosition.x) / (rigidbodyPosition.z - playerPosition.z))
+				// 	* Mathf.Rad2Deg;
+				//
+				// rotation = Quaternion.Euler(0, playerPosition.z > rigidbodyPosition.z ? yRotation : 180 + yRotation, 0);
 			}
 			else
-			{
-				Vector3 rigidbodyRotation = this._rigidbody.rotation.eulerAngles;
-
-				rotation = rigidbodyRotation == this._finalRotation.eulerAngles
-					? this._finalRotation
-					: Quaternion.Euler(
-						0,
-						rigidbodyRotation.y - (rigidbodyRotation.y - 180) * this.FinalRotationSpeed,
-						0);
-			}
+				rotation = Quaternion.RotateTowards(
+					this._rigidbody.rotation,
+					this._finalRotation,
+					this.FinalRotationSpeed);
 
 			return rotation;
 		}

@@ -1,94 +1,97 @@
-using System.Collections.Generic;
-using Helpers;
-using UnityEngine;
-using UnityEngine.UI;
-
-public class GameController : MonoBehaviour
+namespace SpaceShooter
 {
-	public delegate void OnWaveSpawnDelegate(int waveCount);
+	using System.Collections.Generic;
+	using Helpers;
+	using UnityEngine;
+	using UnityEngine.UI;
 
-	private Transform _enemiesContainer;
-	private int _score;
-	private int _waveCount;
-
-	public GameObject[] Enemies;
-	public int EnemiesPerWave;
-	public float EnemiesSpawnOffset;
-	public GameObject RestartMenu;
-	public Text ScoreBoard;
-	public GameObject SettingsMenu;
-	public float StartDelay;
-	public int WavesSpawnOffset;
-
-	public static bool PlayerIsAlive { get; private set; } = true;
-
-	public static event OnWaveSpawnDelegate OnWaveSpawn;
-
-	private void Awake()
-		=> this._enemiesContainer = GameObject.FindWithTag("EnemiesContainer")
-			.transform;
-
-	private void Start()
+	public class GameController : MonoBehaviour
 	{
-		this.StartCoroutine(this.SpawnWave());
-		this.UpdateScore();
-	}
+		public delegate void OnWaveSpawnDelegate(int waveCount);
 
-	private void Update()
-	{
-		if (Input.GetKeyDown(KeyCode.Escape) == false) return;
+		private Transform _enemiesContainer;
+		private int _score;
+		private int _waveCount;
 
-		MenuHelper.ToggleSettingsMenu(this.SettingsMenu);
-	}
+		public GameObject[] Enemies;
+		public int EnemiesPerWave;
+		public float EnemiesSpawnOffset;
+		public GameObject RestartMenu;
+		public Text ScoreBoard;
+		public GameObject SettingsMenu;
+		public float StartDelay;
+		public int WavesSpawnOffset;
 
-	private void OnApplicationQuit() => PlayerPrefs.Save();
+		public static bool PlayerIsAlive { get; private set; } = true;
 
-	private IEnumerator<WaitForSeconds> SpawnWave()
-	{
-		yield return new WaitForSeconds(this.StartDelay);
+		public static event OnWaveSpawnDelegate OnWaveSpawn;
 
-		while (PlayerIsAlive)
+		private void Awake()
+			=> this._enemiesContainer = GameObject.FindWithTag("EnemiesContainer")
+				.transform;
+
+		private void Start()
 		{
-			OnWaveSpawn?.Invoke(this._waveCount);
-
-			for (int i = 0; i < this.EnemiesPerWave; i++)
-			{
-				int randomIndex = Random.Range(0, this.Enemies.Length);
-
-				Vector3 spawnPosition = new Vector3(
-					Random.Range(-(ScreenController.Dimensions.x - 1), ScreenController.Dimensions.x - 1),
-					0,
-					ScreenController.Dimensions.z + 1);
-
-				GameObject obstacle = Instantiate(this.Enemies[randomIndex], this._enemiesContainer);
-				obstacle.transform.position = spawnPosition;
-
-				yield return new WaitForSeconds(this.EnemiesSpawnOffset);
-			}
-
-			this._waveCount++;
-
-			yield return new WaitForSeconds(this.WavesSpawnOffset);
+			this.StartCoroutine(this.SpawnWave());
+			this.UpdateScore();
 		}
-	}
 
-	private void UpdateScore() => this.ScoreBoard.text = $"Score: {this._score}";
+		private void Update()
+		{
+			if (Input.GetKeyDown(KeyCode.Escape) == false) return;
 
-	public void AddPoints(int scores)
-	{
-		this._score += scores;
-		this.UpdateScore();
-	}
+			MenuHelper.ToggleSettingsMenu(this.SettingsMenu);
+		}
 
-	public void GameOver()
-	{
-		PlayerIsAlive = false;
+		private void OnApplicationQuit() => PlayerPrefs.Save();
 
-		this.ScoreBoard.gameObject.SetActive(false);
-		this.RestartMenu.SetActive(true);
+		private IEnumerator<WaitForSeconds> SpawnWave()
+		{
+			yield return new WaitForSeconds(this.StartDelay);
 
-		this.RestartMenu.gameObject.transform.Find("PointsText")
-			.GetComponent<Text>()
-			.text = $"You scored {this._score} points.";
+			while (PlayerIsAlive)
+			{
+				OnWaveSpawn?.Invoke(this._waveCount);
+
+				for (int i = 0; i < this.EnemiesPerWave; i++)
+				{
+					int randomIndex = Random.Range(0, this.Enemies.Length);
+
+					Vector3 spawnPosition = new Vector3(
+						Random.Range(-(ScreenController.Dimensions.x - 1), ScreenController.Dimensions.x - 1),
+						0,
+						ScreenController.Dimensions.z + 1);
+
+					GameObject obstacle = Instantiate(this.Enemies[randomIndex], this._enemiesContainer);
+					obstacle.transform.position = spawnPosition;
+
+					yield return new WaitForSeconds(this.EnemiesSpawnOffset);
+				}
+
+				this._waveCount++;
+
+				yield return new WaitForSeconds(this.WavesSpawnOffset);
+			}
+		}
+
+		private void UpdateScore() => this.ScoreBoard.text = $"Score: {this._score}";
+
+		public void AddPoints(int scores)
+		{
+			this._score += scores;
+			this.UpdateScore();
+		}
+
+		public void GameOver()
+		{
+			PlayerIsAlive = false;
+
+			this.ScoreBoard.gameObject.SetActive(false);
+			this.RestartMenu.SetActive(true);
+
+			this.RestartMenu.gameObject.transform.Find("PointsText")
+				.GetComponent<Text>()
+				.text = $"You scored {this._score} points.";
+		}
 	}
 }

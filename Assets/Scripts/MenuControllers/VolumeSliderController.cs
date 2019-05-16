@@ -1,4 +1,4 @@
-namespace MenuControllers
+namespace SpaceShooter.MenuControllers
 {
 	using GlobalControllers;
 	using UnityEngine;

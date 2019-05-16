@@ -1,4 +1,4 @@
-namespace GlobalControllers
+namespace SpaceShooter.GlobalControllers
 {
 	using UnityEngine;
 	using UnityEngine.Audio;

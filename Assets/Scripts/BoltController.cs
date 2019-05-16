@@ -1,32 +1,35 @@
-using Helpers;
-using UnityEngine;
-
-public class BoltController : MonoBehaviour
+namespace SpaceShooter
 {
-	private GameController _gameController;
+	using Helpers;
+	using UnityEngine;
 
-	public bool IsPlayerBolt;
-
-	private void Awake() => this._gameController = FindObjectOfType<GameController>();
-
-	private void OnTriggerEnter(Collider other)
+	public class BoltController : MonoBehaviour
 	{
-		if (other.CompareTag("Border")
-			|| other.CompareTag(this.tag)
-			|| other.CompareParentTag("Player") == this.IsPlayerBolt) return;
+		private GameController _gameController;
 
-		GameObject target = other.GetParent();
-		GameObject explosion = ExplosionsHelper.GetExplosion(target);
-		ExplosionsHelper.Execute(explosion, this.transform);
+		public bool IsPlayerBolt;
 
-		if (this.IsPlayerBolt)
+		private void Awake() => this._gameController = FindObjectOfType<GameController>();
+
+		private void OnTriggerEnter(Collider other)
 		{
-			int scores = ScoresHelper.GetPoints(target);
-			this._gameController.AddPoints(scores);
-		}
-		else this._gameController.GameOver();
+			if (other.CompareTag("Border")
+				|| other.CompareTag(this.tag)
+				|| other.CompareParentTag("Player") == this.IsPlayerBolt) return;
 
-		other.DestroyCollider();
-		Destroy(this.gameObject);
+			GameObject target = other.GetParent();
+			GameObject explosion = ExplosionsHelper.GetExplosion(target);
+			ExplosionsHelper.Execute(explosion, this.transform);
+
+			if (this.IsPlayerBolt)
+			{
+				int scores = ScoresHelper.GetPoints(target);
+				this._gameController.AddPoints(scores);
+			}
+			else this._gameController.GameOver();
+
+			other.DestroyCollider();
+			Destroy(this.gameObject);
+		}
 	}
 }

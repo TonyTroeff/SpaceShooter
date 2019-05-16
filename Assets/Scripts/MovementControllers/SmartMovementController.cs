@@ -1,4 +1,4 @@
-namespace MovementControllers
+namespace SpaceShooter.MovementControllers
 {
 	using UnityEngine;
 

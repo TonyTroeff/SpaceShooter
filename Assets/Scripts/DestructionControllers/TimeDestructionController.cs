@@ -1,4 +1,4 @@
-namespace DestructionControllers
+namespace SpaceShooter.DestructionControllers
 {
 	using UnityEngine;
 

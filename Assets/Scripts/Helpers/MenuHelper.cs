@@ -1,4 +1,4 @@
-namespace Helpers
+namespace SpaceShooter.Helpers
 {
 	using UnityEngine;
 	using UnityEngine.SceneManagement;

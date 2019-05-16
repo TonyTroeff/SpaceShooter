@@ -1,12 +1,15 @@
-using UnityEngine;
-
-public class ScreenController : MonoBehaviour
+namespace SpaceShooter
 {
-	public static Vector3 Dimensions { get; private set; }
+	using UnityEngine;
 
-	private void Awake()
+	public class ScreenController : MonoBehaviour
 	{
-		Vector3 screenValues = new Vector3(Screen.width, Screen.height, 0);
-		Dimensions = Camera.main.ScreenToWorldPoint(screenValues);
+		public static Vector3 Dimensions { get; private set; }
+
+		private void Awake()
+		{
+			Vector3 screenValues = new Vector3(Screen.width, Screen.height, 0);
+			Dimensions = Camera.main.ScreenToWorldPoint(screenValues);
+		}
 	}
 }
