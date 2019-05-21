@@ -30,7 +30,7 @@ namespace SpaceShooter.MovementControllers
 			{
 				Vector3 playerPosition = this._player.position;
 				Vector3 rigidbodyPosition = this._rigidbody.position;
-
+				
 				rotation = Quaternion.LookRotation(playerPosition - rigidbodyPosition);
 
 				// Maths:
