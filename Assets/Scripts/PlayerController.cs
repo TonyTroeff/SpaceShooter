@@ -1,19 +1,15 @@
 ﻿namespace SpaceShooter
 {
-	using System;
 	using UnityEngine;
 
 	public class PlayerController : MonoBehaviour
 	{
 		private Rigidbody _rigidbody;
-		private float _initialZ;
 
 		public float Speed = 1;
 		public float Tilt = 1;
 
 		private void Awake() => this._rigidbody = this.GetComponent<Rigidbody>();
-
-		private void Start() => this._initialZ = Input.acceleration.z;
 
 		private void FixedUpdate()
 		{
@@ -36,8 +32,7 @@
 		// // TODO: Android
 		// private void FixedUpdate()
 		// {
-		// 	this._rigidbody.velocity =
-		// 		(Quaternion.Euler(110, 0, 0) * new Vector3(Input.acceleration.x, 0, Input.acceleration.z)) * this.Speed;
+		// 	this._rigidbody.velocity = Input.acceleration * this.Speed;
 		//
 		// 	this._rigidbody.position = new Vector3(
 		// 		Mathf.Clamp(

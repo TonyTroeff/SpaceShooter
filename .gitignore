@@ -36,4 +36,4 @@ sysinfo.txt
 *.unitypackage
 
 # All secret files
-Secrets/*
+Assets/Resources/*
