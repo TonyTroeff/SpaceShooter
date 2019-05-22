@@ -6,7 +6,6 @@
 
 	public class PlayerController : MonoBehaviour
 	{
-		private PlayerProgressInfo _playerProgress;
 		private Rigidbody _rigidbody;
 
 		public float Speed = 1;
@@ -15,9 +14,8 @@
 		private void Awake()
 		{
 			this._rigidbody = this.GetComponent<Rigidbody>();
-			this._playerProgress = Serializer.Load<PlayerProgressInfo>() ?? new PlayerProgressInfo();
 		}
-
+		
 		private void FixedUpdate()
 		{
 			float horizontalMovement = Input.GetAxis("Horizontal");

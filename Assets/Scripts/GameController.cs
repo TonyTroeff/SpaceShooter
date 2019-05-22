@@ -2,8 +2,10 @@ namespace SpaceShooter
 {
 	using System.Collections.Generic;
 	using Helpers;
+	using Serialization;
 	using UnityEngine;
 	using UnityEngine.UI;
+	using Utilities;
 
 	public class GameController : MonoBehaviour
 	{
@@ -22,6 +24,7 @@ namespace SpaceShooter
 		public float StartDelay;
 		public int WavesSpawnOffset;
 
+		public static PlayerProgressInfo PlayerProgressInfo { get; private set; }
 		public static bool PlayerIsAlive { get; private set; } = true;
 
 		public static event OnWaveSpawnDelegate OnWaveSpawn;
@@ -29,6 +32,8 @@ namespace SpaceShooter
 		private void Awake()
 		{
 			PlayerIsAlive = true;
+			PlayerProgressInfo = Serializer.Load<PlayerProgressInfo>();
+
 			this._enemiesContainer = GameObject.FindWithTag("EnemiesContainer")
 				.transform;
 		}
@@ -46,7 +51,11 @@ namespace SpaceShooter
 			MenuHelper.ToggleSettingsMenu(this.SettingsMenu);
 		}
 
-		private void OnApplicationQuit() => PlayerPrefs.Save();
+		private void OnApplicationQuit()
+		{
+			Serializer.Save(PlayerProgressInfo);
+			PlayerPrefs.Save();
+		}
 
 		private IEnumerator<WaitForSeconds> SpawnWave()
 		{
