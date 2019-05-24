@@ -18,9 +18,12 @@ namespace SpaceShooter
 		public GameObject[] Enemies;
 		public int EnemiesPerWave;
 		public float EnemiesSpawnOffset;
+		public Text HighestScoreBoard;
+
 		public GameObject RestartMenu;
 		public Text ScoreBoard;
 		public GameObject SettingsMenu;
+
 		public float StartDelay;
 		public int WavesSpawnOffset;
 
@@ -41,6 +44,7 @@ namespace SpaceShooter
 		private void Start()
 		{
 			this.StartCoroutine(this.SpawnWave());
+			this.UpdateHighestScore();
 			this.UpdateScore();
 		}
 
@@ -51,11 +55,7 @@ namespace SpaceShooter
 			MenuHelper.ToggleSettingsMenu(this.SettingsMenu);
 		}
 
-		private void OnApplicationQuit()
-		{
-			Serializer.Save(PlayerProgressInfo);
-			PlayerPrefs.Save();
-		}
+		private void OnDestroy() => this.SaveProgress();
 
 		private IEnumerator<WaitForSeconds> SpawnWave()
 		{
@@ -86,12 +86,24 @@ namespace SpaceShooter
 			}
 		}
 
-		private void UpdateScore() => this.ScoreBoard.text = $"Score: {this._score}";
+		private void UpdateScore() => this.ScoreBoard.text = $"{this._score} points";
+
+		private void UpdateHighestScore()
+			=> this.HighestScoreBoard.text = $"Highest score: {PlayerProgressInfo.HighestScore} points";
+
+		private void SaveProgress()
+		{
+			PlayerProgressInfo.HighestScore = Mathf.Max(PlayerProgressInfo.HighestScore, this._score);
+			Serializer.Save(PlayerProgressInfo);
+			PlayerPrefs.Save();
+		}
 
 		public void AddPoints(int scores)
 		{
 			this._score += scores;
 			this.UpdateScore();
+
+			// TODO: Consider if the highest score board should be updated if a new record is submitted.
 		}
 
 		public void GameOver()
@@ -99,8 +111,8 @@ namespace SpaceShooter
 			PlayerIsAlive = false;
 
 			this.ScoreBoard.gameObject.SetActive(false);
-			this.RestartMenu.SetActive(true);
 
+			this.RestartMenu.SetActive(true);
 			this.RestartMenu.gameObject.transform.Find("PointsText")
 				.GetComponent<Text>()
 				.text = $"You scored {this._score} points.";

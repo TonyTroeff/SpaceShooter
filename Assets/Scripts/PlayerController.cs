@@ -1,8 +1,6 @@
 ﻿namespace SpaceShooter
 {
-	using Serialization;
 	using UnityEngine;
-	using Utilities;
 
 	public class PlayerController : MonoBehaviour
 	{
@@ -11,11 +9,8 @@
 		public float Speed = 1;
 		public float Tilt = 1;
 
-		private void Awake()
-		{
-			this._rigidbody = this.GetComponent<Rigidbody>();
-		}
-		
+		private void Awake() => this._rigidbody = this.GetComponent<Rigidbody>();
+
 		private void FixedUpdate()
 		{
 			float horizontalMovement = Input.GetAxis("Horizontal");
