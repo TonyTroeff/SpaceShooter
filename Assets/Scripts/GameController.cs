@@ -88,8 +88,10 @@ namespace SpaceShooter
 
 		private void UpdateScore() => this.ScoreBoard.text = $"{this._score} points";
 
-		private void UpdateHighestScore()
-			=> this.HighestScoreBoard.text = $"Highest score: {PlayerProgressInfo.HighestScore} points";
+		private void UpdateHighestScore(bool isNewHighScore = false)
+			=> this.HighestScoreBoard.text = isNewHighScore
+				? "New highest score!"
+				: $"Highest score: {PlayerProgressInfo.HighestScore} points";
 
 		private void SaveProgress()
 		{
@@ -104,6 +106,7 @@ namespace SpaceShooter
 			this.UpdateScore();
 
 			// TODO: Consider if the highest score board should be updated if a new record is submitted.
+			if (this._score > PlayerProgressInfo.HighestScore) this.UpdateHighestScore(true);
 		}
 
 		public void GameOver()

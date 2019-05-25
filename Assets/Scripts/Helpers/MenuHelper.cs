@@ -21,12 +21,13 @@ namespace SpaceShooter.Helpers
 			_isPaused = !_isPaused;
 		}
 
-		public static void Restart()
+		public static void Play()
 		{
 			if (_isPaused) TogglePause();
-			SceneManager.LoadScene(0);
+			
+			SceneManager.LoadScene("Main");
 		}
-
+		
 		public static void Exit() => Application.Quit();
 	}
 }
