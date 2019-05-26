@@ -5,6 +5,7 @@ namespace SpaceShooter.Utilities
 	[Serializable]
 	public class PlayerProgressInfo
 	{
-		public int HighestScore;
+		public int UpgradePoints;
+		public PlayerSpaceShipInfo[] SpaceShips;
 	}
 }

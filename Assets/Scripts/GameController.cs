@@ -27,7 +27,7 @@ namespace SpaceShooter
 		public float StartDelay;
 		public int WavesSpawnOffset;
 
-		public static PlayerProgressInfo PlayerProgressInfo { get; private set; }
+		public static PlayerScoreInfo PlayerScoreInfo { get; private set; }
 		public static bool PlayerIsAlive { get; private set; } = true;
 
 		public static event OnWaveSpawnDelegate OnWaveSpawn;
@@ -35,7 +35,7 @@ namespace SpaceShooter
 		private void Awake()
 		{
 			PlayerIsAlive = true;
-			PlayerProgressInfo = Serializer.Load<PlayerProgressInfo>();
+			PlayerScoreInfo = Serializer.Load<PlayerScoreInfo>();
 
 			this._enemiesContainer = GameObject.FindWithTag("EnemiesContainer")
 				.transform;
@@ -91,12 +91,12 @@ namespace SpaceShooter
 		private void UpdateHighestScore(bool isNewHighScore = false)
 			=> this.HighestScoreBoard.text = isNewHighScore
 				? "New highest score!"
-				: $"Highest score: {PlayerProgressInfo.HighestScore} points";
+				: $"Highest score: {PlayerScoreInfo.HighestScore} points";
 
 		private void SaveProgress()
 		{
-			PlayerProgressInfo.HighestScore = Mathf.Max(PlayerProgressInfo.HighestScore, this._score);
-			Serializer.Save(PlayerProgressInfo);
+			PlayerScoreInfo.HighestScore = Mathf.Max(PlayerScoreInfo.HighestScore, this._score);
+			Serializer.Save(PlayerScoreInfo);
 			PlayerPrefs.Save();
 		}
 
@@ -106,7 +106,7 @@ namespace SpaceShooter
 			this.UpdateScore();
 
 			// TODO: Consider if the highest score board should be updated if a new record is submitted.
-			if (this._score > PlayerProgressInfo.HighestScore) this.UpdateHighestScore(true);
+			if (this._score > PlayerScoreInfo.HighestScore) this.UpdateHighestScore(true);
 		}
 
 		public void GameOver()
