@@ -12,7 +12,7 @@ namespace SpaceShooter
 		public delegate void OnWaveSpawnDelegate(int waveCount);
 
 		private Transform _enemiesContainer;
-		private int _score;
+		private long _score;
 		private int _waveCount;
 
 		public GameObject[] Enemies;
@@ -35,7 +35,7 @@ namespace SpaceShooter
 		private void Awake()
 		{
 			PlayerIsAlive = true;
-			PlayerScoreInfo = Serializer.Load<PlayerScoreInfo>();
+			PlayerScoreInfo = Serializer.Load<PlayerScoreInfo>() ?? new PlayerScoreInfo();
 
 			this._enemiesContainer = GameObject.FindWithTag("EnemiesContainer")
 				.transform;
@@ -95,7 +95,9 @@ namespace SpaceShooter
 
 		private void SaveProgress()
 		{
-			PlayerScoreInfo.HighestScore = Mathf.Max(PlayerScoreInfo.HighestScore, this._score);
+			PlayerScoreInfo.HighestScore = (long)Mathf.Max(PlayerScoreInfo.HighestScore, this._score);
+			PlayerScoreInfo.Coins += this._score;
+			
 			Serializer.Save(PlayerScoreInfo);
 			PlayerPrefs.Save();
 		}

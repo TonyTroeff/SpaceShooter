@@ -11,7 +11,8 @@ namespace SpaceShooter.Serialization
 		private static readonly string _encryptionKey = Resources.Load<TextAsset>("EncryptionKey")
 			?.text;
 
-		public static void Save<T>(T obj) where T : class
+		public static void Save<T>(T obj)
+			where T : class
 		{
 			string json = JsonUtility.ToJson(obj);
 
@@ -30,7 +31,8 @@ namespace SpaceShooter.Serialization
 					{
 						byte[] encryptedJsonBytes = encryptor.TransformFinalBlock(jsonToBytes, 0, jsonToBytes.Length);
 
-						// 44 symbols long
+						// TODO: Length
+						// 88 symbols long
 						string encryptedJson = Convert.ToBase64String(encryptedJsonBytes);
 
 						// 172 symbols long
@@ -47,7 +49,8 @@ namespace SpaceShooter.Serialization
 			File.WriteAllText(GetPath<T>(), json);
 		}
 
-		public static T Load<T>() where T : class
+		public static T Load<T>()
+			where T : class
 		{
 			string path = GetPath<T>();
 
@@ -58,9 +61,9 @@ namespace SpaceShooter.Serialization
 			if (_encryptionKey != null)
 				using (RijndaelManaged rijndael = GetRijndaelManaged())
 				{
-					byte[] encryptedJsonBytes = GetByteSequence(json, 0, 44);
-					byte[] salt = GetByteSequence(json, 44, 172);
-					byte[] iv = GetByteSequence(json, 216, 24);
+					byte[] encryptedJsonBytes = GetByteSequence(json, 0, 88);
+					byte[] salt = GetByteSequence(json, 88, 172);
+					byte[] iv = GetByteSequence(json, 260, 24);
 
 					byte[] key = GetDerivedKey(rijndael.KeySize / 8, salt);
 
