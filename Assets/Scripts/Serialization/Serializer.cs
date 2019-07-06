@@ -31,17 +31,12 @@ namespace SpaceShooter.Serialization
 					{
 						byte[] encryptedJsonBytes = encryptor.TransformFinalBlock(jsonToBytes, 0, jsonToBytes.Length);
 
-						// TODO: Length
-						// 88 symbols long
 						string encryptedJson = Convert.ToBase64String(encryptedJsonBytes);
-
-						// 172 symbols long
 						string saltString = Convert.ToBase64String(salt);
-
-						// 24 symbols long.
 						string ivString = Convert.ToBase64String(rijndael.IV);
 
-						json = encryptedJson + saltString + ivString;
+						json = encryptedJson.FormattedLength() + saltString.FormattedLength()
+							+ ivString.FormattedLength() + encryptedJson + saltString + ivString;
 					}
 				}
 			}
@@ -56,14 +51,18 @@ namespace SpaceShooter.Serialization
 
 			if (File.Exists(path) == false) return null;
 
-			string json = File.ReadAllText(path);
+			string text = File.ReadAllText(path);
+			int encryptedJsonLength = int.Parse(text.Substring(0, 4));
+			int saltStringLength = int.Parse(text.Substring(4, 4));
+			int ivStringLength = int.Parse(text.Substring(8, 4));
+			string json = text.Substring(12);
 
 			if (_encryptionKey != null)
 				using (RijndaelManaged rijndael = GetRijndaelManaged())
 				{
-					byte[] encryptedJsonBytes = GetByteSequence(json, 0, 88);
-					byte[] salt = GetByteSequence(json, 88, 172);
-					byte[] iv = GetByteSequence(json, 260, 24);
+					byte[] encryptedJsonBytes = GetByteSequence(json, 0, encryptedJsonLength);
+					byte[] salt = GetByteSequence(json, encryptedJsonLength, saltStringLength);
+					byte[] iv = GetByteSequence(json, encryptedJsonLength + saltStringLength, ivStringLength);
 
 					byte[] key = GetDerivedKey(rijndael.KeySize / 8, salt);
 
@@ -107,5 +106,7 @@ namespace SpaceShooter.Serialization
 
 		private static byte[] GetByteSequence(string text, int start, int length)
 			=> Convert.FromBase64String(text.Substring(start, length));
+
+		private static string FormattedLength(this string text) => text.Length.ToString("0000");
 	}
 }
